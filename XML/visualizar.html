@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizacion de Datos</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <script>
+        function mostrarDatos() {
+            //Obtener el XML almacenado en localStorage
+            const xmlData = localStorage.getItem(`usuarioXML`);
+            if (xmlData) {
+                //Parsear el XML
+                const parsear = new DOMParser();
+                const xmlDoc = parsear.parseFromString(xmlData, "application/xml")
+
+                //Extraer informacion
+                const nombre = xmlDoc.getElementsByTagName("nombre")[0].textContent;
+                const email = xmlDoc.getElementsByTagName("email")[0].textContent;
+                const anio = xmlDoc.getElementsByTagName("anio")[0].textContent;
+                const telefono = xmlDoc.getElementsByTagName("telefono")[0].textContent;
+
+                //Mostrar la informaion en el HTML
+                document.getElementById("resultado").innerHTML = `
+                    <h2>Datos Recibidos:</h2>
+                    <p><strong>Nombre:</strong> ${nombre}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Año de nacimiento:</strong> ${anio}</p>
+                    <p><strong>Numero de telefono:</strong> ${telefono}</p>
+                    `;
+            } else {
+                document.getElementById("resultado").innerHTML = "<p>No se encontraron resultados.</p>"
+            }
+        }
+    </script>
+</head>
+
+<body onload="mostrarDatos()">
+    <h1> Visualizacion de Datos</h1>
+    <div id="resultado"></div>
+
+</body>
+
+</html>
